@@ -102,7 +102,7 @@ def run_drying(
         t_span=(0.0, duration),
         y0=[Y_particle_init, Y_gas_init, T_particle_init],
         args=(params,),
-        method="RK45",
+        method="LSODA",   # Y_g has τ=0.5 s vs minutes-long simulation → stiff
         t_eval=t_eval,
         rtol=rtol,
         atol=atol,

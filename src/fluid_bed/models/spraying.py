@@ -109,7 +109,7 @@ def run_spraying(
     duration : float
         Spraying duration [s].  Computed as: Qty_solution [kg] / spray_rate [kg/s].
     Y_particle_init : float
-        Initial acetone content [kg/kg]. Usually 0 at start of spraying.
+        Initial acetone content [kg/kg]. 0.0 = bone-dry particles at spray start.
     Y_gas_init : float
         Initial gas moisture [kg/kg]. Usually ~0 (dry air).
     M_coating_init : float
@@ -125,7 +125,8 @@ def run_spraying(
         t_span=(0.0, duration),
         y0=[Y_particle_init, Y_gas_init, M_coating_init, T_particle_init],
         args=(params,),
-        method="RK45",
+        method="LSODA",   # Y_g has τ=0.5 s vs minutes-long simulation → stiff
+        # method="RK45",
         t_eval=t_eval,
         rtol=rtol,
         atol=atol,
