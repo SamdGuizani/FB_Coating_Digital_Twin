@@ -77,6 +77,12 @@ class ProcessParameters:
     r_drying: float = 3.19e-3      # kg/s, attrition rate constant
     n_drying: float = 1.0          # order (1 = loss ∝ normalised coating load)
 
+    # ── Specific surface area override ────────────────────────────────────────
+    # When > 0, total_surface uses the BET/mercury-intrusion SSA instead of the
+    # geometric sphere formula.  Allows diameter (for Re) and surface (for
+    # heat/mass transfer) to be set independently for non-ideal particles.
+    ssa_cm2_g: float = 0.0         # cm²/g; 0 = use geometric sphere formula
+
     # ─────────────────────────────────────────────────────────────────────────
     # Computed properties
     # ─────────────────────────────────────────────────────────────────────────
@@ -103,7 +109,14 @@ class ProcessParameters:
 
     @property
     def total_surface(self) -> float:
-        """Total particle surface area in bed [m²]."""
+        """
+        Total particle surface area in bed [m²].
+
+        Uses SSA (ssa_cm2_g) when set, falling back to the geometric sphere
+        formula otherwise.  1 cm²/g = 0.1 m²/kg.
+        """
+        if self.ssa_cm2_g > 0:
+            return self.ssa_cm2_g * 0.1 * self.batch_size
         return self.n_particles * self.surface_particle
 
     def stage_air_flow(self, stage: int) -> float:
