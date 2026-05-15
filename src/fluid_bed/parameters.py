@@ -65,6 +65,18 @@ class ProcessParameters:
     # ── Coating material ──────────────────────────────────────────────────────
     cp_coating: float = 1300.0     # J/kg/K, e.g. ethylcellulose
 
+    # ── Coating deposition efficiency (spraying stage) ────────────────────────
+    # dMc/dt = spray_rate·DMC  −  r_spraying
+    # Constant (order-0) loss; accounts for attrition and spray losses.
+    # r_spraying=0 → 100% efficiency
+    r_spraying: float = 6.72e-6    # kg/s, constant coating loss rate
+
+    # ── Coating attrition during drying ───────────────────────────────────────
+    # dMc/dt = -r_drying · (Mc/batch)^n_drying
+    # r_drying=0 → no attrition during drying
+    r_drying: float = 3.19e-3      # kg/s, attrition rate constant
+    n_drying: float = 1.0          # order (1 = loss ∝ normalised coating load)
+
     # ─────────────────────────────────────────────────────────────────────────
     # Computed properties
     # ─────────────────────────────────────────────────────────────────────────

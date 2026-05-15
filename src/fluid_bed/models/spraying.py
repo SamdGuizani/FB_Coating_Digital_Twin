@@ -63,8 +63,9 @@ def _rhs(t: float, state: list[float], params: ProcessParameters) -> list[float]
     tau = params.gas_residence_time
     dYg_dt = (R_D_total - m_air * (Y_g - Y_g_in)) / (m_air * tau)
 
-    # Coating mass deposition (all dry matter deposits; efficiency = 1 simplification)
-    dMc_dt = spray_rate_dm
+    # Coating mass balance: constant (order-0) loss rate [kg/s]
+    # Simplification of  r_spraying·(Mc/batch)^n  at n=0  →  r_spraying·1 = r_spraying
+    dMc_dt = spray_rate_dm - params.r_spraying
 
     # Particle energy balance
     Q_conv = alpha_h * params.total_surface * (T_g - T_p)
@@ -125,7 +126,7 @@ def run_spraying(
         t_span=(0.0, duration),
         y0=[Y_particle_init, Y_gas_init, M_coating_init, T_particle_init],
         args=(params,),
-        method="LSODA",   # Y_g has τ=0.5 s vs minutes-long simulation → stiff
+        method="BDF",     # equivalent to MATLAB ode15s; handles Y_g stiffness (τ=0.5 s)
         # method="RK45",
         t_eval=t_eval,
         rtol=rtol,
