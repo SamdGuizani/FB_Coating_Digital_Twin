@@ -62,8 +62,9 @@ MATLAB_Legacy/**/Output Files/**
 *.h5
 
 # ── Large raw data files ──────────────────────────────────────────────────────
-# CSV input files for DoE runs are tracked; generated/processed outputs are not
-MATLAB_Legacy/**/Input Files/*.mat
+# Input Files folders contain raw DoE data — keep local, never push
+MATLAB_Legacy/**/Input Files/
+MATLAB_Legacy/**/Input Files/**
 
 # ── Temporary & log files ─────────────────────────────────────────────────────
 *.log
