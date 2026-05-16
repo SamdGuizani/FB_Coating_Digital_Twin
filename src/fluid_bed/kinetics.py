@@ -29,7 +29,7 @@ def coating_mass_order1(
     """
     First-order deposition model (port of ordre_1.m).
 
-    Y_model = (DMC · ṁ_spray / k) · (1 − exp(−k · t / batch_size))
+    Y_model = (DMC · ṁ_spray / k) · (1 - exp(-k · t / batch_size))
 
     Returns predicted coating mass [kg] at end of spraying.
     """

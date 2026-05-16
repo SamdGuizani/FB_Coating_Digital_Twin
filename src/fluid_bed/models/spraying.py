@@ -14,7 +14,7 @@ Gas temperature T_g is resolved quasi-steadily (effectiveness-NTU),
 making T_g an algebraic output rather than an ODE state.
 
 Gas moisture Y_g is modelled with a fast first-order dynamic:
-    dY_g/dt = (R_D·batch_size − ṁ_air·(Y_g − Y_g_in)) / (ṁ_air·τ_gas)
+    dY_g/dt = (R_D·batch_size - ṁ_air·(Y_g - Y_g_in)) / (ṁ_air·τ_gas)
 so it tracks its quasi-steady value with time constant τ_gas.
 """
 
