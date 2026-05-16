@@ -1,0 +1,163 @@
+# FB_Coating_Digital_Twin
+
+Physics-based digital twin for a fluid bed coating process - Python port
+of a MATLAB legacy model, extended with empirical correlations for coating
+loss rates fitted on a 20-run Design of Experiments (Bosch, 2018).
+
+---
+
+## Overview
+
+The model simulates a three-stage pharmaceutical coating process:
+
+```
+Pre-heating  →  Spraying  →  Drying
+```
+
+Each stage solves a system of ODEs for particle temperature, gas
+temperature, solvent (acetone) content on particles and in the gas phase,
+and coating mass deposited on the batch. Dissolution profiles are predicted
+from the coating weight gain using a first-order permeation model.
+
+Two empirical correlations, fitted on the 19-run DoE, replace fixed
+literature values for the coating attrition rates:
+
+| Parameter | Model | R² | LOO-CV ratio |
+|---|---|---|---|
+| `r_spraying` | Spray rate + coating conc + DM ratio + interaction | 0.844 | 1.11 |
+| `r_drying` | Batch size + DM ratio + SSA + humidity + interaction | 0.851 | 1.36 |
+
+Both models were selected by two-stage AICc exhaustive subset search.
+
+---
+
+## Repository structure
+
+```
+.
+├── notebooks/
+│   ├── 01_preheating.ipynb          # Single-stage pre-heating exploration
+│   ├── 02_spraying.ipynb            # Single-stage spraying exploration
+│   ├── 03_drying.ipynb              # Single-stage drying exploration
+│   ├── 04_dissolution.ipynb         # First-order dissolution model
+│   ├── 05a_FB_Coating_Digital_Twin_Demo.ipynb   # Full twin — manual r sliders
+│   ├── 05b_FB_Coating_Digital_Twin.ipynb        # Full twin — empirical correlations
+│   └── 06_FB_Twin_Validation.ipynb  # Validation against 20 DoE runs
+│
+├── src/
+│   ├── fluid_bed/                   # Installable simulation package
+│   │   ├── parameters.py            # ProcessParameters dataclass
+│   │   ├── kinetics.py              # Drying/evaporation kinetics
+│   │   ├── transfer.py              # Heat & mass transfer coefficients
+│   │   ├── drying.py                # Drying rate calculation
+│   │   └── models/
+│   │       ├── preheating.py        # Pre-heating ODE solver
+│   │       ├── spraying.py          # Spraying ODE solver
+│   │       ├── drying_stage.py      # Drying ODE solver + legacy r_drying correlation
+│   │       ├── dissolution.py       # Dissolution model
+│   │       └── coating_correlations.py  # DoE-fitted r_spraying & r_drying functions
+│   │
+│   ├── extract_doe_inputs.py        # Extract process parameters from raw DoE CSVs
+│   └── Coating_WG_coef_optimization/
+│       ├── 01_fit_dissolution_k.py          # Fit k [1/s] from observed dissolution
+│       ├── 02_invert_dissolution_model.py   # Back-calculate WG from k
+│       ├── 03_invert_spraying_ode.py        # Analytical inversion → r_spraying
+│       ├── 04_invert_drying_ode.py          # Analytical inversion → r_drying
+│       ├── 05_validate_inferred_params.py   # RMSE vs observed dissolution
+│       ├── 06a_fit_r_spraying.py            # AICc regression for r_spraying
+│       └── 06b_fit_r_drying.py             # AICc regression for r_drying
+│
+├── MATLAB_Legacy/                   # Original MATLAB source (reference only)
+│   └── Coater 1 stage/
+│       └── *.m, *.mlx
+│
+├── environment.yml
+└── pyproject.toml
+```
+
+> **Data note:** the `data/` folder (raw DoE CSVs, dissolution profiles,
+> fitted outputs) is excluded from version control via `.gitignore`.
+> Contact the author to obtain the dataset.
+
+---
+
+## Installation
+
+```bash
+# 1. Create and activate the conda environment
+conda env create -f environment.yml
+conda activate FB_twin
+
+# 2. Install the fluid_bed package in editable mode
+pip install -e .
+```
+
+Requires Python 3.11.
+
+---
+
+## Notebooks
+
+### Stage-by-stage exploration (01–04)
+Walk through each process stage in isolation: parameter sensitivity,
+temperature and solvent profiles, and dissolution curve shape.
+
+### Interactive digital twin — Demo (05a)
+Full PH → SP → DR simulation with sliders for every process parameter,
+including **manual sliders for r_spray (0–40 ×10⁻⁶ kg/s) and r_dry
+(0–10 ×10⁻³ kg/s)**. Intended for exploring the sensitivity of coating
+weight gain and dissolution to the loss-rate coefficients.
+A dotted line shows the theoretical no-loss WG for reference.
+
+### Interactive digital twin — Empirical correlations (05b)
+Same interface but **r_spray and r_dry are computed automatically** from
+the process parameters using the DoE-fitted correlations. The humidity
+slider operates in real units (g/kg) to feed the r_drying model correctly.
+
+### DoE validation (06)
+Run-by-run comparison against observed temperature profiles and dissolution
+data for all 20 DoE runs. A slider selects the run; both figures update
+automatically.
+
+---
+
+## Coefficient optimisation pipeline
+
+Run the scripts in `src/Coating_WG_coef_optimization/` in order to
+reproduce the fitted correlations from scratch:
+
+```bash
+python src/extract_doe_inputs.py          # populate DoE_recipe_and_inputs.csv
+
+python src/Coating_WG_coef_optimization/01_fit_dissolution_k.py
+python src/Coating_WG_coef_optimization/02_invert_dissolution_model.py
+python src/Coating_WG_coef_optimization/03_invert_spraying_ode.py
+python src/Coating_WG_coef_optimization/04_invert_drying_ode.py
+python src/Coating_WG_coef_optimization/05_validate_inferred_params.py
+python src/Coating_WG_coef_optimization/06a_fit_r_spraying.py
+python src/Coating_WG_coef_optimization/06b_fit_r_drying.py
+```
+
+Each script prints a summary and saves results to `data/`.
+Run 20 is excluded from steps 02–06 (anomalous SSA batch, leading to
+a physically impossible implied weight gain).
+
+---
+
+## Key modelling assumptions
+
+- Particle temperature is uniform within the bed (lumped model)
+- Gas temperature is quasi-steady (effectiveness-NTU approximation)
+- Coating attrition during spraying is order-0: `dMc/dt = −r_spray`
+- Coating attrition during drying is order-1: `dMc/dt = −r_dry · Mc/batch`
+- Dissolution follows a first-order permeation model:
+  `F(t) = 100 · (1 − exp(−k·t))` with `k ∝ SSA² / coating_mass`
+- Inlet air moisture is set to zero for all simulations
+  (humidity enters only through the empirical r_drying correlation)
+
+---
+
+## Reference
+
+Dataset: Bosch DoE, December 2018 — 20-run fluid bed coating experiment
+(internal; not redistributed in this repository).
