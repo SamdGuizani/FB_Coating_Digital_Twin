@@ -10,9 +10,13 @@ dependencies:
   - matplotlib>=3.7
   - seaborn>=0.12
   - jupyter
+  - jupyterlab
   - ipykernel
+  - ipywidgets>=8.0
   - openpyxl
+  - statsmodels>=0.14
   - pytest
   - pip
   - pip:
+      - mat73
       - -e .
