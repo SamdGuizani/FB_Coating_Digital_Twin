@@ -32,6 +32,9 @@ htmlcov/
 .ipynb_checkpoints/
 */.ipynb_checkpoints/
 
+# ── Claude Code ───────────────────────────────────────────────────────────────
+.claude/
+
 # ── IDE / editors ─────────────────────────────────────────────────────────────
 .vscode/settings.json
 .vscode/launch.json
