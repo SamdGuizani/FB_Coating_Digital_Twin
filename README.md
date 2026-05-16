@@ -14,10 +14,14 @@ The model simulates a three-stage pharmaceutical coating process:
 Pre-heating  →  Spraying  →  Drying
 ```
 
+<img width="1309" height="544" alt="image" src="https://github.com/user-attachments/assets/cbb15aba-04ed-4d1f-af15-56e578d099ed" />
+
 Each stage solves a system of ODEs for particle temperature, gas
 temperature, solvent (acetone) content on particles and in the gas phase,
 and coating mass deposited on the batch. Dissolution profiles are predicted
 from the coating weight gain using a first-order permeation model.
+
+<img width="1749" height="544" alt="image" src="https://github.com/user-attachments/assets/b63e9880-dd70-4deb-8425-202160e38416" />
 
 Two empirical correlations, fitted on the 19-run DoE, replace fixed
 literature values for the coating attrition rates:
