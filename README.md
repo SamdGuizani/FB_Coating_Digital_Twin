@@ -145,7 +145,7 @@ python src/Coating_WG_coef_optimization/06b_fit_r_drying.py
 ```
 
 Each script prints a summary and saves results to `data/`.
-Run 20 is excluded from steps 02–06 (anomalous SSA batch, leading to
+Run 20 is excluded from steps 02–06 (anomalous experiment results, leading to
 a physically impossible implied weight gain).
 
 ---
