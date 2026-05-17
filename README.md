@@ -2,7 +2,7 @@
 
 Physics-based digital twin for a fluid bed coating process - Python port
 of a MATLAB legacy model, extended with empirical correlations for coating
-loss rates fitted on a 20-run Design of Experiments (Bosch, 2018).
+loss rates fitted on a 20-run Design of Experiments (2018).
 
 ---
 
@@ -83,7 +83,7 @@ Both models were selected by two-stage AICc exhaustive subset search.
 
 > **Data note:** the `data/` folder (raw DoE CSVs, dissolution profiles,
 > fitted outputs) is excluded from version control via `.gitignore`.
-> Contact the author to obtain the dataset.
+> Contact the author for information.
 
 ---
 
@@ -110,8 +110,8 @@ temperature and solvent profiles, and dissolution curve shape.
 
 ### Interactive digital twin — Demo (05a)
 Full PH → SP → DR simulation with sliders for every process parameter,
-including **manual sliders for r_spray (0–40 ×10⁻⁶ kg/s) and r_dry
-(0–10 ×10⁻³ kg/s)**. Intended for exploring the sensitivity of coating
+including **manual sliders for r_spray (0–40 ×10⁻⁶) and r_dry
+(0–10 ×10⁻³)**. Intended for exploring the sensitivity of coating
 weight gain and dissolution to the loss-rate coefficients.
 A dotted line shows the theoretical no-loss WG for reference.
 
@@ -165,5 +165,5 @@ a physically impossible implied weight gain).
 
 ## Reference
 
-Dataset: Bosch DoE, December 2018 — 20-run fluid bed coating experiment
+Dataset: DoE, December 2018 - 20-run fluid bed coating experiment
 (internal; not redistributed in this repository).
