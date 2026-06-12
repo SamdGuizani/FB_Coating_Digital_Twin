@@ -151,7 +151,7 @@ $T_g$ represents the effective bed gas temperature seen by the particles: for la
 exchange area) it approaches $T_p$; for small NTU it stays near the inlet temperature
 $T_{g,\mathrm{in}}$.
 
-### 3.4 Drying rate `R_D` (solvent evaporation)
+### 3.4 Drying rate $R_D$ (solvent evaporation)
 
 Implemented in [drying.py](src/fluid_bed/drying.py). The specific drying rate
 $R_D$ [kg acetone / (kg particle · s)] combines three ingredients:
@@ -200,7 +200,7 @@ occurs. The total evaporation rate from the bed is $R_D \cdot M_b$ [kg/s].
 Each stage is an initial-value problem solved with `scipy.integrate.solve_ivp`. The energy balance
 has the same structure in every stage; only the source terms differ.
 
-### 4.1 Pre-heating — state `[T_p]`
+### 4.1 Pre-heating — state $[T_p]$
 
 Hot air heats the dry bed; no solvent, no coating
 ([models/preheating.py](src/fluid_bed/models/preheating.py)):
@@ -213,7 +213,7 @@ with $T_g$ from the quasi-steady relation of §3.3. The system is non-stiff and 
 **RK45**. The initial condition is ambient temperature (~293 K); the final $T_p$ becomes the
 spraying initial condition.
 
-### 4.2 Spraying — state `[Y_p, Y_g, M_c, T_p]`
+### 4.2 Spraying — state $[Y_p, Y_g, M_c, T_p]$
 
 Coating solution (acetone + EC at dry-matter fraction $x_\mathrm{DM}$) is atomised onto the heated
 bed at total rate $\dot m_\mathrm{spray}$ [kg solution/s]
@@ -263,7 +263,7 @@ $$
 The spraying duration is $t_\mathrm{spray} = m_\mathrm{solution} / \dot m_\mathrm{spray}$.
 Initial conditions: $Y_p = Y_g = M_c = 0$ and $T_p$ from the end of pre-heating.
 
-### 4.3 Drying — state `[Y_p, Y_g, M_c, T_p]`
+### 4.3 Drying — state $[Y_p, Y_g, M_c, T_p]$
 
 Spray off; hot air strips the residual acetone while particle–particle and particle–wall collisions
 erode the fresh coating ([models/drying_stage.py](src/fluid_bed/models/drying_stage.py)):
@@ -353,7 +353,7 @@ flowchart TD
     D --> G["06b — OLS correlation for r_drying"]
 ```
 
-### 6.1 Step 01 — Fit the dissolution rate constant `k`
+### 6.1 Step 01 — Fit the dissolution rate constant $k$
 
 For each run, the first-order model $F(t) = 100 \cdot (1 - e^{-kt})$ is fitted by nonlinear least
 squares to the averaged dissolution profiles sampled **at end of spraying** and **at discharge**
@@ -377,7 +377,7 @@ $\mathrm{WG_{max}}$ (100 % deposition), the spray efficiency
 $\mathrm{WG_{sp}}/\mathrm{WG_{max}}$, and the coating lost during drying
 $\Delta \mathrm{WG} = \mathrm{WG_{sp}} - \mathrm{WG_{dc}}$.
 
-### 6.3 Step 03 — Invert the spraying balance → `r_spraying` per run
+### 6.3 Step 03 — Invert the spraying balance → $r_\mathrm{spraying}$ per run
 
 For order-0 loss the spraying coating balance integrates analytically with $M_c(0) = 0$:
 
@@ -393,7 +393,7 @@ r_\mathrm{spraying} = \dot m_\mathrm{spray}~x_\mathrm{DM} ~-~ \frac{\mathrm{WG_{
 }
 $$
 
-### 6.4 Step 04 — Invert the drying balance → `r_drying` per run
+### 6.4 Step 04 — Invert the drying balance → $r_\mathrm{drying}$ per run
 
 For order-1 attrition the drying coating balance also integrates analytically:
 
