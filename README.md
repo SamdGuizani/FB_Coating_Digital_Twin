@@ -22,6 +22,13 @@ temperature, solvent (acetone) content on particles and in the gas phase,
 and coating mass deposited on the batch. Dissolution profiles are predicted
 from the coating weight gain using a first-order permeation model.
 
+The full modelling background — ODE derivations, all equations, the
+inverse-modelling pipeline and nomenclature — is documented in
+[MODELLING_BACKGROUND_README.md](MODELLING_BACKGROUND_README.md).
+
+The twin can be used interactively either through the Jupyter notebooks
+(see below) or through a **Streamlit web app** (`streamlit run app.py`).
+
 <img width="1269" height="614" alt="image" src="https://github.com/user-attachments/assets/0490885e-4f53-4e23-9163-a353ae02547d" />
 
 
@@ -41,6 +48,8 @@ Both models were selected by two-stage AICc exhaustive subset search.
 
 ```
 .
+├── app.py                           # Streamlit web app (replicates notebook 05b)
+│
 ├── notebooks/
 │   ├── 01_preheating.ipynb          # Single-stage pre-heating exploration
 │   ├── 02_spraying.ipynb            # Single-stage spraying exploration
@@ -56,6 +65,7 @@ Both models were selected by two-stage AICc exhaustive subset search.
 │   │   ├── kinetics.py              # Drying/evaporation kinetics
 │   │   ├── transfer.py              # Heat & mass transfer coefficients
 │   │   ├── drying.py                # Drying rate calculation
+│   │   ├── data_loader.py           # Bosch CSV / dissolution / .mat parsers
 │   │   └── models/
 │   │       ├── preheating.py        # Pre-heating ODE solver
 │   │       ├── spraying.py          # Spraying ODE solver
@@ -77,6 +87,7 @@ Both models were selected by two-stage AICc exhaustive subset search.
 │   └── Coater 1 stage/
 │       └── *.m, *.mlx
 │
+├── MODELLING_BACKGROUND_README.md   # Full modelling background (equations, derivations)
 ├── environment.yml
 └── pyproject.toml
 ```
@@ -127,6 +138,23 @@ automatically.
 
 ---
 
+## Streamlit web app
+
+A browser-based version of the digital twin (same model as notebook 05b:
+`r_spray` and `r_dry` computed from the DoE-fitted empirical correlations):
+
+```bash
+conda activate FB_twin
+streamlit run app.py
+```
+
+The app opens in the browser with process-parameter controls in a sidebar
+and the simulated temperature/solvent/coating profiles and predicted
+dissolution curve in the main panel — no Jupyter required, convenient for
+sharing the twin with non-programmers.
+
+---
+
 ## Coefficient optimisation pipeline
 
 Run the scripts in `src/Coating_WG_coef_optimization/` in order to
@@ -160,6 +188,10 @@ a physically impossible implied weight gain).
   `F(t) = 100 · (1 − exp(−k·t))` with `k ∝ SSA² / coating_mass`
 - Inlet air moisture is set to zero for all simulations
   (humidity enters only through the empirical r_drying correlation)
+
+See [MODELLING_BACKGROUND_README.md](MODELLING_BACKGROUND_README.md) for the
+complete list of assumptions and limitations, the full ODE systems and the
+parameter-estimation methodology.
 
 ---
 
