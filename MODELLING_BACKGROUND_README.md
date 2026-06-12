@@ -104,9 +104,9 @@ the stage air mass flow $\dot{m}_\mathrm{air}$ and the bed cross-section
 $A_\mathrm{bed} = \tfrac{\pi}{4} d_\mathrm{bed}^2$:
 
 $$
-u = \frac{\dot{m}_\mathrm{air}}{\rho_\mathrm{air} \, A_\mathrm{bed}},
+u = \frac{\dot{m}_\mathrm{air}}{\rho_\mathrm{air} ~ A_\mathrm{bed}},
 \qquad
-\mathrm{Re} = \frac{\rho_\mathrm{air} \, u \, d_\mathrm{eq}}{\mu_\mathrm{air}}
+\mathrm{Re} = \frac{\rho_\mathrm{air} ~ u ~ d_\mathrm{eq}}{\mu_\mathrm{air}}
 $$
 
 For the spraying stage (stage 1) the atomisation air flow is added to the process air flow before
@@ -114,25 +114,25 @@ computing $u$. The Nusselt and Sherwood numbers use the same Ranz–Marshall-typ
 ported from the legacy MATLAB code, with a 2/5 exponent on the Prandtl/Schmidt group):
 
 $$
-\mathrm{Nu} = 2 + \mathrm{Pr}^{2/5}\left(0.43\,\mathrm{Re}^{1/2} + 0.06\,\mathrm{Re}^{2/3}\right),
+\mathrm{Nu} = 2 + \mathrm{Pr}^{2/5}\left(0.43~\mathrm{Re}^{1/2} + 0.06~\mathrm{Re}^{2/3}\right),
 \qquad
-\mathrm{Sh} = 2 + \mathrm{Sc}^{2/5}\left(0.43\,\mathrm{Re}^{1/2} + 0.06\,\mathrm{Re}^{2/3}\right)
+\mathrm{Sh} = 2 + \mathrm{Sc}^{2/5}\left(0.43~\mathrm{Re}^{1/2} + 0.06~\mathrm{Re}^{2/3}\right)
 $$
 
 with
 
 $$
-\mathrm{Pr} = \frac{c_{p,\mathrm{air}} \, \mu_\mathrm{air}}{\lambda_\mathrm{air}},
+\mathrm{Pr} = \frac{c_{p,\mathrm{air}} ~ \mu_\mathrm{air}}{\lambda_\mathrm{air}},
 \qquad
-\mathrm{Sc} = \frac{\mu_\mathrm{air}}{\rho_\mathrm{air} \, D_\mathrm{ac}}
+\mathrm{Sc} = \frac{\mu_\mathrm{air}}{\rho_\mathrm{air} ~ D_\mathrm{ac}}
 $$
 
 The transfer coefficients then follow from their definitions:
 
 $$
-\alpha_h = \frac{\mathrm{Nu} \, \lambda_\mathrm{air}}{d_\mathrm{eq}} \;\;[\mathrm{W\,m^{-2}\,K^{-1}}],
+\alpha_h = \frac{\mathrm{Nu} ~ \lambda_\mathrm{air}}{d_\mathrm{eq}}  \quad [\mathrm{W~m^{-2}~K^{-1}}],
 \qquad
-\alpha_m = \frac{\mathrm{Sh} \, D_\mathrm{ac}}{d_\mathrm{eq}} \;\;[\mathrm{m\,s^{-1}}]
+\alpha_m = \frac{\mathrm{Sh} ~ D_\mathrm{ac}}{d_\mathrm{eq}}  \quad [\mathrm{m~s^{-1}}]
 $$
 
 ### 3.3 Quasi-steady gas temperature (effectiveness–NTU)
@@ -142,7 +142,7 @@ so the gas temperature is not an ODE state. Instead it is resolved algebraically
 right-hand-side evaluation via the effectiveness–NTU method:
 
 $$
-\mathrm{NTU} = \frac{\alpha_h \, A_\mathrm{tot}}{\dot{m}_\mathrm{air} \, c_{p,\mathrm{air}}},
+\mathrm{NTU} = \frac{\alpha_h ~ A_\mathrm{tot}}{\dot{m}_\mathrm{air} ~ c_{p,\mathrm{air}}},
 \qquad
 T_g = \frac{T_{g,\mathrm{in}} + \mathrm{NTU}\cdot T_p}{1 + \mathrm{NTU}}
 $$
@@ -162,7 +162,7 @@ $R_D$ [kg acetone / (kg particle · s)] combines three ingredients:
 $$
 \log_{10} P^\mathrm{sat}_\mathrm{ac}(T_p) = A - \frac{B}{C + T_p[°\mathrm{C}]},
 \qquad
-P\,[\mathrm{Pa}] = P\,[\mathrm{mmHg}] \times 133.322
+P~[\mathrm{Pa}] = P~[\mathrm{mmHg}] \times 133.322
 $$
 
 with $A = 7.1327$, $B = 1219.97$, $C = 230.653$ for acetone.
@@ -171,7 +171,7 @@ with $A = 7.1327$, $B = 1219.97$, $C = 230.653$ for acetone.
 loading $Y_g$ [kg acetone / kg dry air]:
 
 $$
-p_\mathrm{ac}(Y_g) = P_\mathrm{tot} \, \frac{Y_g}{\dfrac{\mathrm{MW}_\mathrm{ac}}{\mathrm{MW}_\mathrm{air}} + Y_g}
+p_\mathrm{ac}(Y_g) = P_\mathrm{tot} ~ \frac{Y_g}{\dfrac{\mathrm{MW}_\mathrm{ac}}{\mathrm{MW}_\mathrm{air}} + Y_g}
 $$
 
 **(c) Langmuir-type isotherm factor** — throttles evaporation as the particles approach dryness
@@ -185,14 +185,14 @@ The drying rate is then a film-model mass flux through the Ranz–Marshall mass 
 coefficient, per unit particle mass:
 
 $$
-R_D = \varphi(Y_p)\;
-\frac{\alpha_m \, A_p \,\left[\,P^\mathrm{sat}_\mathrm{ac}(T_p) - p_\mathrm{ac}(Y_g)\,\right]^{+}}
-     {m_p \,\left(R / \mathrm{MW}_\mathrm{ac}\right)\, \bar{T}},
+R_D = \varphi(Y_p)~
+\frac{\alpha_m ~ A_p ~\left[~P^\mathrm{sat}_\mathrm{ac}(T_p) - p_\mathrm{ac}(Y_g)~\right]^{+}}
+     {m_p ~\left(R / \mathrm{MW}_\mathrm{ac}\right)~ \bar{T}},
 \qquad
 \bar{T} = \tfrac{1}{2}\left(T_p + T_g\right)
 $$
 
-where $[\,\cdot\,]^{+} = \max(\cdot, 0)$ — the driving force is clamped at zero so no condensation
+where $[~\cdot~]^{+} = \max(\cdot, 0)$ — the driving force is clamped at zero so no condensation
 occurs. The total evaporation rate from the bed is $R_D \cdot M_b$ [kg/s].
 
 ## 4. Stage models — the ODE systems
@@ -200,20 +200,20 @@ occurs. The total evaporation rate from the bed is $R_D \cdot M_b$ [kg/s].
 Each stage is an initial-value problem solved with `scipy.integrate.solve_ivp`. The energy balance
 has the same structure in every stage; only the source terms differ.
 
-### 4.1 Pre-heating — state $[\,T_p\,]$
+### 4.1 Pre-heating — state $[~T_p~]$
 
 Hot air heats the dry bed; no solvent, no coating
 ([models/preheating.py](src/fluid_bed/models/preheating.py)):
 
 $$
-\frac{dT_p}{dt} = \frac{\alpha_h \, A_\mathrm{tot}\,(T_g - T_p)}{M_b \, c_{p,p}}
+\frac{dT_p}{dt} = \frac{\alpha_h ~ A_\mathrm{tot}~(T_g - T_p)}{M_b ~ c_{p,p}}
 $$
 
 with $T_g$ from the quasi-steady relation of §3.3. The system is non-stiff and solved with
 **RK45**. The initial condition is ambient temperature (~293 K); the final $T_p$ becomes the
 spraying initial condition.
 
-### 4.2 Spraying — state $[\,Y_p,\; Y_g,\; M_c,\; T_p\,]$
+### 4.2 Spraying — state $[~Y_p,~ Y_g,~ M_c,~ T_p~]$
 
 Coating solution (acetone + EC at dry-matter fraction $x_\mathrm{DM}$) is atomised onto the heated
 bed at total rate $\dot{m}_\mathrm{spray}$ [kg solution/s]
@@ -221,9 +221,9 @@ bed at total rate $\dot{m}_\mathrm{spray}$ [kg solution/s]
 and a solvent stream:
 
 $$
-\dot{m}_\mathrm{DM} = \dot{m}_\mathrm{spray}\, x_\mathrm{DM},
+\dot{m}_\mathrm{DM} = \dot{m}_\mathrm{spray}~ x_\mathrm{DM},
 \qquad
-\dot{m}_\mathrm{solv} = \dot{m}_\mathrm{spray}\,(1 - x_\mathrm{DM})
+\dot{m}_\mathrm{solv} = \dot{m}_\mathrm{spray}~(1 - x_\mathrm{DM})
 $$
 
 **Particle acetone balance** — solvent arrives with the spray and leaves by evaporation:
@@ -236,7 +236,7 @@ $$
 time constant equal to the gas residence time $\tau_g = 0.5\ \mathrm{s}$:
 
 $$
-\frac{dY_g}{dt} = \frac{R_D\,M_b - \dot{m}_\mathrm{air}\,\left(Y_g - Y_{g,\mathrm{in}}\right)}{\dot{m}_\mathrm{air}\,\tau_g}
+\frac{dY_g}{dt} = \frac{R_D~M_b - \dot{m}_\mathrm{air}~\left(Y_g - Y_{g,\mathrm{in}}\right)}{\dot{m}_\mathrm{air}~\tau_g}
 $$
 
 At steady state this reduces to the algebraic gas-side balance
@@ -247,23 +247,23 @@ $Y_g = Y_{g,\mathrm{in}} + R_D M_b / \dot{m}_\mathrm{air}$. The small $\tau_g$ m
 (droplets that dry in flight and leave with the exhaust instead of depositing):
 
 $$
-\frac{dM_c}{dt} = \dot{m}_\mathrm{spray}\, x_\mathrm{DM} - r_\mathrm{spraying}
+\frac{dM_c}{dt} = \dot{m}_\mathrm{spray}~ x_\mathrm{DM} - r_\mathrm{spraying}
 $$
 
 $r_\mathrm{spraying} = 0$ corresponds to 100 % deposition efficiency. The order-0 form is the
-$n = 0$ special case of the general loss law $r\,(M_c/M_b)^n$.
+$n = 0$ special case of the general loss law $r~(M_c/M_b)^n$.
 
 **Particle energy balance** — convective heating opposed by evaporative cooling, with an effective
 heat capacity that accounts for the liquid acetone held by the particles:
 
 $$
-\frac{dT_p}{dt} = \frac{\alpha_h A_\mathrm{tot}\,(T_g - T_p) \;-\; R_D\, M_b\, \Delta h_\mathrm{vap}}{M_b\,\left(c_{p,p} + Y_p\, c_{p,\mathrm{ac}}^{\,\ell}\right)}
+\frac{dT_p}{dt} = \frac{\alpha_h A_\mathrm{tot}~(T_g - T_p) ~-~ R_D~ M_b~ \Delta h_\mathrm{vap}}{M_b~\left(c_{p,p} + Y_p~ c_{p,\mathrm{ac}}^{~\ell}\right)}
 $$
 
 The spraying duration is $t_\mathrm{spray} = m_\mathrm{solution} / \dot{m}_\mathrm{spray}$.
 Initial conditions: $Y_p = Y_g = M_c = 0$ and $T_p$ from the end of pre-heating.
 
-### 4.3 Drying — state $[\,Y_p,\; Y_g,\; M_c,\; T_p\,]$
+### 4.3 Drying — state $[~Y_p,~ Y_g,~ M_c,~ T_p~]$
 
 Spray off; hot air strips the residual acetone while particle–particle and particle–wall collisions
 erode the fresh coating ([models/drying_stage.py](src/fluid_bed/models/drying_stage.py)):
@@ -273,20 +273,20 @@ $$
 $$
 
 $$
-\frac{dY_g}{dt} = \frac{R_D\,M_b - \dot{m}_\mathrm{air}\,\left(Y_g - Y_{g,\mathrm{in}}\right)}{\dot{m}_\mathrm{air}\,\tau_g}
+\frac{dY_g}{dt} = \frac{R_D~M_b - \dot{m}_\mathrm{air}~\left(Y_g - Y_{g,\mathrm{in}}\right)}{\dot{m}_\mathrm{air}~\tau_g}
 $$
 
 **Coating attrition** — first-order in the normalised coating load (default $n = 1$): the more
 coating per kilogram of bed, the more is available to abrade:
 
 $$
-\frac{dM_c}{dt} = -\,r_\mathrm{drying} \left(\frac{M_c}{M_b}\right)^{n}
+\frac{dM_c}{dt} = -~r_\mathrm{drying} \left(\frac{M_c}{M_b}\right)^{n}
 $$
 
 **Energy balance** — identical in form to the spraying stage:
 
 $$
-\frac{dT_p}{dt} = \frac{\alpha_h A_\mathrm{tot}\,(T_g - T_p) \;-\; R_D\, M_b\, \Delta h_\mathrm{vap}}{M_b\,\left(c_{p,p} + Y_p\, c_{p,\mathrm{ac}}^{\,\ell}\right)}
+\frac{dT_p}{dt} = \frac{\alpha_h A_\mathrm{tot}~(T_g - T_p) ~-~ R_D~ M_b~ \Delta h_\mathrm{vap}}{M_b~\left(c_{p,p} + Y_p~ c_{p,\mathrm{ac}}^{~\ell}\right)}
 $$
 
 Solver: **BDF** (same stiffness source as spraying). Initial conditions are the end-states of the
@@ -299,10 +299,10 @@ models are available for fitting experimental profiles $F(t)$ [% released]:
 
 | Model | Equation | Parameters |
 |---|---|---|
-| Zero-order | $F(t) = k\,t$ | $k$ |
+| Zero-order | $F(t) = k~t$ | $k$ |
 | **First-order** | $F(t) = 100\left(1 - e^{-k t}\right)$ | $k$ |
 | Higuchi | $F(t) = k\sqrt{t}$ | $k$ |
-| Korsmeyer–Peppas | $F(t) = 100\,k\,t^{\,n}$ | $k$, $n$ |
+| Korsmeyer–Peppas | $F(t) = 100~k~t^{~n}$ | $k$, $n$ |
 
 The **first-order model was retained** for the twin: it fits the observed profiles well and its
 single rate constant $k$ can be linked mechanistically to the coating layer. The link is a
@@ -313,13 +313,13 @@ $x_\mathrm{EC} = M_c / M_b$ spread over the particle surface (SSA), this gives t
 used throughout the project:
 
 $$
-k = \frac{m_\mathrm{sample}\,\cdot\,\mathrm{SSA}^2 \,\cdot\, \mathcal{P} \,\cdot\, \rho_\mathrm{EC}}{V_\mathrm{disso}\,\cdot\, x_\mathrm{EC}}
+k = \frac{m_\mathrm{sample}~\cdot~\mathrm{SSA}^2 ~\cdot~ \mathcal{P} ~\cdot~ \rho_\mathrm{EC}}{V_\mathrm{disso}~\cdot~ x_\mathrm{EC}}
 \qquad [\mathrm{s}^{-1}]
 $$
 
 with $m_\mathrm{sample} = 1.058\ \mathrm{g}$ (dissolution sample mass),
-$\mathcal{P} = 1.5\times10^{-7}\ \mathrm{cm^2\,s^{-1}}$ (EC film permeability),
-$\rho_\mathrm{EC} = 0.4\ \mathrm{g\,cm^{-3}}$, $V_\mathrm{disso} = 1000\ \mathrm{mL}$, SSA in
+$\mathcal{P} = 1.5\times10^{-7}\ \mathrm{cm^2~s^{-1}}$ (EC film permeability),
+$\rho_\mathrm{EC} = 0.4\ \mathrm{g~cm^{-3}}$, $V_\mathrm{disso} = 1000\ \mathrm{mL}$, SSA in
 cm²/g and $x_\mathrm{EC}$ in g/g. **More coating → smaller $k$ → slower release**, which is the
 quantity the process is designed to control.
 
@@ -332,7 +332,7 @@ Most model parameters are **measured or taken from literature**: particle size a
 (BET / mercury intrusion), bed geometry, air properties, Antoine coefficients, acetone latent heat
 and heat capacities, and the per-run DoE operating settings (air flows, temperatures, spray rate,
 solution concentration, batch size). One constant — the acetone diffusivity in air,
-$D_\mathrm{ac} = 10^{-6}\ \mathrm{m^2\,s^{-1}}$ — is inherited from the legacy MATLAB code and is
+$D_\mathrm{ac} = 10^{-6}\ \mathrm{m^2~s^{-1}}$ — is inherited from the legacy MATLAB code and is
 flagged as **unvalidated**.
 
 The two genuinely unknown parameters, $r_\mathrm{spraying}$ and $r_\mathrm{drying}$, were estimated
@@ -355,7 +355,7 @@ flowchart TD
 
 ### 6.1 Step 01 — Fit the dissolution rate constant $k$
 
-For each run, the first-order model $F(t) = 100\,(1 - e^{-kt})$ is fitted by nonlinear least
+For each run, the first-order model $F(t) = 100~(1 - e^{-kt})$ is fitted by nonlinear least
 squares to the averaged dissolution profiles sampled **at end of spraying** and **at discharge**
 (after drying), giving two rate constants per run, $k_\mathrm{sp}$ and $k_\mathrm{dc}$, with $R^2$
 diagnostics.
@@ -365,9 +365,9 @@ diagnostics.
 The forward relation of §5 is solved for the EC mass fraction:
 
 $$
-x_\mathrm{EC} = \frac{m_\mathrm{sample}\,\mathrm{SSA}^2\, \mathcal{P}\, \rho_\mathrm{EC}}{V_\mathrm{disso}\; k},
+x_\mathrm{EC} = \frac{m_\mathrm{sample}~\mathrm{SSA}^2~ \mathcal{P}~ \rho_\mathrm{EC}}{V_\mathrm{disso}~ k},
 \qquad
-\mathrm{WG}\,[\%] = 100\, x_\mathrm{EC}
+\mathrm{WG} = 100~x_\mathrm{EC}
 $$
 
 Applied to $k_\mathrm{sp}$ and $k_\mathrm{dc}$ this yields the **implied weight gains**
@@ -382,15 +382,15 @@ $\Delta \mathrm{WG} = \mathrm{WG}_\mathrm{sp} - \mathrm{WG}_\mathrm{dc}$.
 For order-0 loss the spraying coating balance integrates analytically with $M_c(0) = 0$:
 
 $$
-M_c(t_\mathrm{spray}) = \left(\dot{m}_\mathrm{spray}\,x_\mathrm{DM} - r_\mathrm{spraying}\right) t_\mathrm{spray}
+M_c(t_\mathrm{spray}) = \left(\dot{m}_\mathrm{spray}~x_\mathrm{DM} - r_\mathrm{spraying}\right) t_\mathrm{spray}
 $$
 
 so, using $M_c(t_\mathrm{spray}) = \frac{\mathrm{WG}_\mathrm{sp}}{100} M_b$ from Step 02:
 
 $$
-\boxed{\;
-r_\mathrm{spraying} = \dot{m}_\mathrm{spray}\,x_\mathrm{DM} \;-\; \frac{\mathrm{WG}_\mathrm{sp}}{100}\,\frac{M_b}{t_\mathrm{spray}}
-\;}
+\boxed{
+r_\mathrm{spraying} = \dot{m}_\mathrm{spray}~x_\mathrm{DM} ~-~ \frac{\mathrm{WG}_\mathrm{sp}}{100}~\frac{M_b}{t_\mathrm{spray}}
+}
 $$
 
 ### 6.4 Step 04 — Invert the drying balance → $r_\mathrm{drying}$ per run
@@ -398,11 +398,11 @@ $$
 For order-1 attrition the drying coating balance also integrates analytically:
 
 $$
-M_c(t) = M_{c,0}\, \exp\!\left(-\frac{r_\mathrm{drying}\; t}{M_b}\right)
+M_c(t) = M_{c,0}~ \exp\left(-\frac{r_\mathrm{drying}~ t}{M_b}\right)
 \quad\Longrightarrow\quad
-\boxed{\;
-r_\mathrm{drying} = -\frac{M_b}{t_\mathrm{dry}} \,\ln\!\left(\frac{\mathrm{WG}_\mathrm{dc}}{\mathrm{WG}_\mathrm{sp}}\right)
-\;}
+\boxed{
+r_\mathrm{drying} = -\frac{M_b}{t_\mathrm{dry}} ~\ln\left(\frac{\mathrm{WG}_\mathrm{dc}}{\mathrm{WG}_\mathrm{sp}}\right)
+}
 $$
 
 (Valid when $0 < \mathrm{WG}_\mathrm{dc} < \mathrm{WG}_\mathrm{sp}$; runs violating this are
@@ -431,11 +431,11 @@ and the concentration × DM-ratio interaction
 
 $$
 \begin{aligned}
-10^{6}\, r_\mathrm{spraying} \,[\mathrm{kg\,s^{-1}}] = \; & 15.334
-\; + \; 0.1970\,\widetilde{\mathrm{SR}}
-\; + \; 9.204\,\widetilde{\mathrm{CC}}
-\; - \; 2.799\,\widetilde{\mathrm{DM}}
-\; - \; 3.698\,\widetilde{\mathrm{CC}}\cdot\widetilde{\mathrm{DM}}
+10^{6}~ r_\mathrm{spraying} ~[\mathrm{kg~s^{-1}}] = {}& 15.334
+~ + ~ 0.1970~\widetilde{\mathrm{SR}}
+~ + ~ 9.204~\widetilde{\mathrm{CC}}
+~ - ~ 2.799~\widetilde{\mathrm{DM}}
+~ - ~ 3.698~\widetilde{\mathrm{CC}}\cdot\widetilde{\mathrm{DM}}
 \end{aligned}
 $$
 
@@ -445,12 +445,12 @@ humidity, and the DM-ratio × humidity interaction
 
 $$
 \begin{aligned}
-10^{3}\, r_\mathrm{drying} \,[\mathrm{kg\,s^{-1}}] = \; & 3.102
-\; + \; 0.8133\,\widetilde{\mathrm{BS}}
-\; - \; 0.7280\,\widetilde{\mathrm{DM}}
-\; + \; 0.1835\,\widetilde{\mathrm{SSA}}
-\; - \; 0.0720\,\widetilde{H}
-\; + \; 0.0339\,\widetilde{\mathrm{DM}}\cdot\widetilde{H}
+10^{3}~ r_\mathrm{drying} ~[\mathrm{kg~s^{-1}}] = {}& 3.102
+~ + ~ 0.8133~\widetilde{\mathrm{BS}}
+~ - ~ 0.7280~\widetilde{\mathrm{DM}}
+~ + ~ 0.1835~\widetilde{\mathrm{SSA}}
+~ - ~ 0.0720~\widetilde{H}
+~ + ~ 0.0339~\widetilde{\mathrm{DM}}\cdot\widetilde{H}
 \end{aligned}
 $$
 
@@ -466,7 +466,7 @@ where the tilde denotes centred predictors, $\widetilde{x} = x - \bar{x}_\mathrm
 | Inlet air absolute humidity (measured) | $H$ | g/kg dry air | 13.45 |
 
 The dry-matter ratio is an engineered predictor:
-$\mathrm{DM} = m_\mathrm{solution} \cdot \mathrm{CC}/100 \,/\, M_b \times 1000$ [g/kg]. Note that
+$\mathrm{DM} = m_\mathrm{solution} \cdot \mathrm{CC}/100 ~/~ M_b \times 1000$ [g/kg]. Note that
 inlet humidity influences the twin **only through the $r_\mathrm{drying}$ correlation** — the ODEs
 themselves run with dry inlet air (§7).
 
@@ -485,7 +485,7 @@ themselves run with dry inlet air (§7).
   is unvalidated, and both correlations clip negative predictions to zero.
 - **Run 20 excluded** — its dissolution-implied weight gain exceeds what was physically sprayed,
   so it is removed from all inversions and regressions (19 training runs).
-- **Acetone diffusivity unvalidated** — $D_\mathrm{ac} = 10^{-6}\ \mathrm{m^2\,s^{-1}}$ is a
+- **Acetone diffusivity unvalidated** — $D_\mathrm{ac} = 10^{-6}\ \mathrm{m^2~s^{-1}}$ is a
   legacy MATLAB value flagged for verification; it directly scales the mass transfer coefficient
   through Sc and Sh.
 - **Dissolution constants are global** — $\mathcal{P}$, $\rho_\mathrm{EC}$, $m_\mathrm{sample}$,
@@ -522,14 +522,14 @@ themselves run with dry inlet air (§7).
 | $R_D$ | Specific drying rate | kg ac. (kg p.)⁻¹ s⁻¹ |
 | $\varphi$, $\alpha_L$ | Langmuir isotherm factor, constant (0.05) | – |
 | $\Delta h_\mathrm{vap}$ | Acetone latent heat (518 kJ/kg) | J/kg |
-| $c_{p,p}$, $c_{p,\mathrm{ac}}^{\,\ell}$, $c_{p,\mathrm{air}}$ | Specific heats (particle, liquid acetone, air) | J kg⁻¹ K⁻¹ |
+| $c_{p,p}$, $c_{p,\mathrm{ac}}^{~\ell}$, $c_{p,\mathrm{air}}$ | Specific heats (particle, liquid acetone, air) | J kg⁻¹ K⁻¹ |
 | $\dot{m}_\mathrm{spray}$, $x_\mathrm{DM}$ | Spray solution rate, dry-matter fraction | kg/s, – |
 | $\tau_g$ | Gas residence time (0.5 s) | s |
 | $r_\mathrm{spraying}$ | Order-0 coating loss rate (spraying) | kg/s |
 | $r_\mathrm{drying}$, $n$ | Attrition rate constant, order (default 1) | kg/s, – |
 | $k$ | First-order dissolution rate constant | s⁻¹ |
 | $F(t)$ | Fraction released | % |
-| $\mathrm{WG}$ | Coating weight gain, $100\,M_c/M_b$ | % |
+| $\mathrm{WG}$ | Coating weight gain, $100~M_c/M_b$ | % |
 | $x_\mathrm{EC}$ | EC mass fraction, $M_c/M_b$ | g/g |
 | $\mathcal{P}$ | EC film permeability ($1.5\times10^{-7}$) | cm²/s |
 | $\rho_\mathrm{EC}$ | EC film density (0.4) | g/cm³ |
@@ -539,8 +539,8 @@ themselves run with dry inlet air (§7).
 
 | Symbol | Definition |
 |---|---|
-| $\mathrm{Re}$ | $\rho_\mathrm{air} u\, d_\mathrm{eq} / \mu_\mathrm{air}$ |
-| $\mathrm{Pr}$ | $c_{p,\mathrm{air}}\, \mu_\mathrm{air} / \lambda_\mathrm{air}$ |
+| $\mathrm{Re}$ | $\rho_\mathrm{air} u~ d_\mathrm{eq} / \mu_\mathrm{air}$ |
+| $\mathrm{Pr}$ | $c_{p,\mathrm{air}}~ \mu_\mathrm{air} / \lambda_\mathrm{air}$ |
 | $\mathrm{Sc}$ | $\mu_\mathrm{air} / (\rho_\mathrm{air} D_\mathrm{ac})$ |
 | $\mathrm{Nu}$, $\mathrm{Sh}$ | $\alpha_h d_\mathrm{eq}/\lambda_\mathrm{air}$, $\alpha_m d_\mathrm{eq}/D_\mathrm{ac}$ |
 | $\mathrm{NTU}$ | $\alpha_h A_\mathrm{tot} / (\dot{m}_\mathrm{air} c_{p,\mathrm{air}})$ |
