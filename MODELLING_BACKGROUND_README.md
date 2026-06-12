@@ -329,7 +329,7 @@ errors, RMSE and $R^2$ per fit.
 ## 6. Parameter estimation and inverse-modelling pipeline
 
 Most model parameters are **measured or taken from literature**: particle size and density, SSA
-(BET / mercury intrusion), bed geometry, air properties, Antoine coefficients, acetone latent heat
+(air permeametry through fixed bed), bed geometry, air properties, Antoine coefficients, acetone latent heat
 and heat capacities, and the per-run DoE operating settings (air flows, temperatures, spray rate,
 solution concentration, batch size). One constant — the acetone diffusivity in air,
 $D_\mathrm{ac} = 10^{-6}\ \mathrm{m^2\ s^{-1}}$ — is inherited from the legacy MATLAB code and is

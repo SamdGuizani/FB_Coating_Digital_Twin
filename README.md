@@ -27,7 +27,7 @@ inverse-modelling pipeline and nomenclature — is documented in
 [MODELLING_BACKGROUND_README.md](MODELLING_BACKGROUND_README.md).
 
 The twin can be used interactively either through the Jupyter notebooks
-(see below) or through a **Streamlit web app** (`streamlit run app.py`).
+(see below) or through a **Streamlit web app** (locally: `streamlit run app.py` or cloud deployed: https://huggingface.co/spaces/SamdGuizani/fluid-bed-coating-twin).
 
 <img width="1269" height="614" alt="image" src="https://github.com/user-attachments/assets/0490885e-4f53-4e23-9163-a353ae02547d" />
 
@@ -147,6 +147,8 @@ A browser-based version of the digital twin (same model as notebook 05b:
 conda activate FB_twin
 streamlit run app.py
 ```
+
+The app is also deployed at https://huggingface.co/spaces/SamdGuizani/fluid-bed-coating-twin.
 
 The app opens in the browser with process-parameter controls in a sidebar
 and the simulated temperature/solvent/coating profiles and predicted
