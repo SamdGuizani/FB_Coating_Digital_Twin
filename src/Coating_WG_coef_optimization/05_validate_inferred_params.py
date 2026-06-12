@@ -32,6 +32,10 @@ from fluid_bed.parameters          import ProcessParameters
 from fluid_bed.models.preheating   import run_preheating
 from fluid_bed.models.spraying     import run_spraying
 from fluid_bed.models.drying_stage import run_drying, calc_r_drying
+from fluid_bed.config import (RHO_AIR, CP_AIR, RHO_PARTICLE as RHO_PART,
+                              CP_PARTICLE as CP_PART, D_BED,
+                              DISSOLUTION as DISS)
+from fluid_bed.models.dissolution import dissolution_k
 
 DATA      = os.path.join(ROOT, "data")
 DOE_CSV   = os.path.join(DATA, "DoE_recipe_and_inputs.csv")
@@ -42,23 +46,17 @@ DDC_DIR   = os.path.join(DATA, "Disso_discharge")
 OUT_CSV   = os.path.join(DATA, "validation_results.csv")
 OUT_PNG   = os.path.join(DATA, "validation_dissolution.png")
 
-# Physical constants (matching notebook 06)
-RHO_AIR  = 1.10;   CP_AIR  = 1010.0
-RHO_PART = 1050.0; CP_PART = 1400.0
-D_BED    = 0.60;   D_PART  = 0.001
-T0_PART  = 293.15; HUMIDITY = 0.0
+# Run-level constants (rig constants RHO_AIR…D_BED come from fluid_bed.config)
+D_PART   = 0.001           # m
+T0_PART  = 293.15          # K
+HUMIDITY = 0.0             # kg/kg, inlet moisture for the ODEs
 R_SPRAY_CURRENT = 6.7e-6   # kg/s
-
-# Dissolution model constants
-DISS = dict(Volume_disso=1000.0, rho_EC=0.4, Permeability=1.5e-7,
-            Mass_sample=1.058, Total_min=240)
 
 def disso_curve(Mc_kg, batch_kg, ssa):
     EC = Mc_kg / batch_kg
     if EC <= 0:
         return np.zeros(DISS["Total_min"] + 1)
-    S = DISS["Mass_sample"] * ssa
-    k = S * DISS["Permeability"] * DISS["rho_EC"] * ssa / (DISS["Volume_disso"] * EC)
+    k = dissolution_k(EC, ssa)
     t_s = np.arange(0, DISS["Total_min"] + 1) * 60.0
     return 100.0 * (1.0 - np.exp(-k * t_s))
 

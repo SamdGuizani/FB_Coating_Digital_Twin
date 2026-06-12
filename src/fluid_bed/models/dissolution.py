@@ -27,6 +27,8 @@ from dataclasses import dataclass
 import numpy as np
 from scipy.optimize import curve_fit
 
+from ..config import DISSOLUTION
+
 
 # ── Model functions ────────────────────────────────────────────────────────────
 
@@ -54,6 +56,51 @@ def model_korsmeyer_peppas(t: np.ndarray, k: float, n: float) -> np.ndarray:
     n ≈ 0.89: Case II transport (erosion)
     """
     return np.clip(100.0 * k * np.power(np.maximum(t, 0.0), n), 0.0, 100.0)
+
+
+# ── Coating-mass ↔ rate-constant link (diffusion through the EC film) ─────────
+
+def dissolution_k(wg_fraction: float, ssa_cm2g: float) -> float:
+    """
+    First-order dissolution rate constant k [1/s] implied by a coating level.
+
+    Diffusion-through-film relation (MODELLING_BACKGROUND_README.md §5):
+
+        k = m_sample · SSA² · P · ρ_EC / (V_disso · x_EC)
+
+    Parameters
+    ----------
+    wg_fraction : EC mass fraction x_EC = M_coating / M_batch [g/g]
+    ssa_cm2g    : particle specific surface area [cm²/g]
+
+    Returns
+    -------
+    k [1/s]; ``inf`` when wg_fraction <= 0 (no coating → instant release).
+    """
+    if wg_fraction <= 0:
+        return float("inf")
+    S = DISSOLUTION["Mass_sample"] * ssa_cm2g
+    return (S * DISSOLUTION["Permeability"] * DISSOLUTION["rho_EC"] * ssa_cm2g
+            / (DISSOLUTION["Volume_disso"] * wg_fraction))
+
+
+def dissolution_curve(wg_fraction: float, ssa_cm2g: float):
+    """
+    Predicted first-order dissolution profile for a given coating level.
+
+    Returns
+    -------
+    (t_min, F_pct, k) : time grid [min] over the standard test duration,
+    released fraction [%] via :func:`model_first_order`, and the rate
+    constant k [1/s] from :func:`dissolution_k`.
+    """
+    k = dissolution_k(wg_fraction, ssa_cm2g)
+    t_s = np.arange(1, DISSOLUTION["Total_min"] + 1) * 60.0
+    if np.isinf(k):
+        F = np.full_like(t_s, 100.0)
+    else:
+        F = model_first_order(t_s, k)
+    return t_s / 60.0, F, k
 
 
 # Registry of available models for programmatic access

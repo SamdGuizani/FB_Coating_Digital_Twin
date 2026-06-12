@@ -16,7 +16,7 @@ dependencies:
   - openpyxl
   - statsmodels>=0.14
   - pytest
-  - streamlit>=1.30
+  - streamlit>=1.37
   - pip
   - pip:
       - mat73

@@ -62,6 +62,8 @@ Both models were selected by two-stage AICc exhaustive subset search.
 ├── src/
 │   ├── fluid_bed/                   # Installable simulation package
 │   │   ├── parameters.py            # ProcessParameters dataclass
+│   │   ├── config.py                # Shared rig constants + dissolution calibration
+│   │   ├── simulate.py              # run_full_process: PH→SP→DR orchestration
 │   │   ├── kinetics.py              # Drying/evaporation kinetics
 │   │   ├── transfer.py              # Heat & mass transfer coefficients
 │   │   ├── drying.py                # Drying rate calculation

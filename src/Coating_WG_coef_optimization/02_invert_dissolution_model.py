@@ -26,23 +26,20 @@ Outputs
 """
 
 import os
+import sys
 import numpy as np
 import pandas as pd
 
 # Paths
 ROOT    = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+sys.path.insert(0, os.path.join(ROOT, "src"))
 DATA    = os.path.join(ROOT, "data")
 IN_K    = os.path.join(DATA, "k_dissolution_fitted.csv")
 DOE_CSV = os.path.join(DATA, "DoE_recipe_and_inputs.csv")
 OUT_CSV = os.path.join(DATA, "WG_implied.csv")
 
-# Dissolution model constants (must match the model used in the notebooks)
-DISS = dict(
-    Volume_disso = 1000.0,   # mL  (= cm^3)
-    rho_EC       = 0.4,      # g/cm^3
-    Permeability = 1.5e-7,   # cm^2/s
-    Mass_sample  = 1.058,    # g
-)
+# Dissolution model calibration constants — shared with the twin front-ends
+from fluid_bed.config import DISSOLUTION as DISS
 
 
 def k_to_WG(k_per_s, ssa_cm2g):
