@@ -251,7 +251,7 @@ $$
 $$
 
 $r_\mathrm{spraying} = 0$ corresponds to 100 % deposition efficiency. The order-0 form is the
-$n = 0$ special case of the general loss law $r~(M_c/M_b)^n$.
+$n = 0$ special case of the general loss law $r (M_c/M_b)^n$.
 
 **Particle energy balance** — convective heating opposed by evaporative cooling, with an effective
 heat capacity that accounts for the liquid acetone held by the particles:
@@ -299,10 +299,10 @@ models are available for fitting experimental profiles $F(t)$ [% released]:
 
 | Model | Equation | Parameters |
 |---|---|---|
-| Zero-order | $F(t) = k~t$ | $k$ |
+| Zero-order | $F(t) = k \cdot t$ | $k$ |
 | **First-order** | $F(t) = 100\left(1 - e^{-k t}\right)$ | $k$ |
 | Higuchi | $F(t) = k\sqrt{t}$ | $k$ |
-| Korsmeyer–Peppas | $F(t) = 100~k \cdot t^{n}$ | $k$, $n$ |
+| Korsmeyer–Peppas | $F(t) = 100 \cdot k \cdot t^{n}$ | $k$, $n$ |
 
 The **first-order model was retained** for the twin: it fits the observed profiles well and its
 single rate constant $k$ can be linked mechanistically to the coating layer. The link is a
@@ -318,8 +318,8 @@ k = \frac{m_\mathrm{sample}~\cdot~\mathrm{SSA}^2 ~\cdot~ \mathcal{P} ~\cdot~ \rh
 $$
 
 with $m_\mathrm{sample} = 1.058\ \mathrm{g}$ (dissolution sample mass),
-$\mathcal{P} = 1.5\times10^{-7}\ \mathrm{cm^2~s^{-1}}$ (EC film permeability),
-$\rho_\mathrm{EC} = 0.4\ \mathrm{g~cm^{-3}}$, $V_\mathrm{disso} = 1000\ \mathrm{mL}$, SSA in
+$\mathcal{P} = 1.5\times10^{-7}\ \mathrm{cm^2\ s^{-1}}$ (EC film permeability),
+$\rho_\mathrm{EC} = 0.4\ \mathrm{g\ cm^{-3}}$, $V_\mathrm{disso} = 1000\ \mathrm{mL}$, SSA in
 cm²/g and $x_\mathrm{EC}$ in g/g. **More coating → smaller $k$ → slower release**, which is the
 quantity the process is designed to control.
 
@@ -332,7 +332,7 @@ Most model parameters are **measured or taken from literature**: particle size a
 (BET / mercury intrusion), bed geometry, air properties, Antoine coefficients, acetone latent heat
 and heat capacities, and the per-run DoE operating settings (air flows, temperatures, spray rate,
 solution concentration, batch size). One constant — the acetone diffusivity in air,
-$D_\mathrm{ac} = 10^{-6}\ \mathrm{m^2~s^{-1}}$ — is inherited from the legacy MATLAB code and is
+$D_\mathrm{ac} = 10^{-6}\ \mathrm{m^2\ s^{-1}}$ — is inherited from the legacy MATLAB code and is
 flagged as **unvalidated**.
 
 The two genuinely unknown parameters, $r_\mathrm{spraying}$ and $r_\mathrm{drying}$, were estimated
@@ -355,7 +355,7 @@ flowchart TD
 
 ### 6.1 Step 01 — Fit the dissolution rate constant `k`
 
-For each run, the first-order model $F(t) = 100~(1 - e^{-kt})$ is fitted by nonlinear least
+For each run, the first-order model $F(t) = 100 \cdot (1 - e^{-kt})$ is fitted by nonlinear least
 squares to the averaged dissolution profiles sampled **at end of spraying** and **at discharge**
 (after drying), giving two rate constants per run, $k_\mathrm{sp}$ and $k_\mathrm{dc}$, with $R^2$
 diagnostics.
@@ -485,7 +485,7 @@ themselves run with dry inlet air (§7).
   is unvalidated, and both correlations clip negative predictions to zero.
 - **Run 20 excluded** — its dissolution-implied weight gain exceeds what was physically sprayed,
   so it is removed from all inversions and regressions (19 training runs).
-- **Acetone diffusivity unvalidated** — $D_\mathrm{ac} = 10^{-6}\ \mathrm{m^2~s^{-1}}$ is a
+- **Acetone diffusivity unvalidated** — $D_\mathrm{ac} = 10^{-6}\ \mathrm{m^2\ s^{-1}}$ is a
   legacy MATLAB value flagged for verification; it directly scales the mass transfer coefficient
   through Sc and Sh.
 - **Dissolution constants are global** — $\mathcal{P}$, $\rho_\mathrm{EC}$, $m_\mathrm{sample}$,
@@ -522,14 +522,14 @@ themselves run with dry inlet air (§7).
 | $R_D$ | Specific drying rate | kg ac. (kg p.)⁻¹ s⁻¹ |
 | $\varphi$, $\alpha_L$ | Langmuir isotherm factor, constant (0.05) | – |
 | $\Delta h_\mathrm{vap}$ | Acetone latent heat (518 kJ/kg) | J/kg |
-| $c_{p,p}$, $c_{p,\mathrm{ac}}^{~\ell}$, $c_{p,\mathrm{air}}$ | Specific heats (particle, liquid acetone, air) | J kg⁻¹ K⁻¹ |
+| $c_{p,p}$, $c_{p,\mathrm{ac}}^{\ell}$, $c_{p,\mathrm{air}}$ | Specific heats (particle, liquid acetone, air) | J kg⁻¹ K⁻¹ |
 | $\dot m_\mathrm{spray}$, $x_\mathrm{DM}$ | Spray solution rate, dry-matter fraction | kg/s, – |
 | $\tau_g$ | Gas residence time (0.5 s) | s |
 | $r_\mathrm{spraying}$ | Order-0 coating loss rate (spraying) | kg/s |
 | $r_\mathrm{drying}$, $n$ | Attrition rate constant, order (default 1) | kg/s, – |
 | $k$ | First-order dissolution rate constant | s⁻¹ |
 | $F(t)$ | Fraction released | % |
-| $\mathrm{WG}$ | Coating weight gain, $100~M_c/M_b$ | % |
+| $\mathrm{WG}$ | Coating weight gain, $100 \cdot M_c/M_b$ | % |
 | $x_\mathrm{EC}$ | EC mass fraction, $M_c/M_b$ | g/g |
 | $\mathcal{P}$ | EC film permeability ($1.5\times10^{-7}$) | cm²/s |
 | $\rho_\mathrm{EC}$ | EC film density (0.4) | g/cm³ |
@@ -539,8 +539,8 @@ themselves run with dry inlet air (§7).
 
 | Symbol | Definition |
 |---|---|
-| $\mathrm{Re}$ | $\rho_\mathrm{air} u~ d_\mathrm{eq} / \mu_\mathrm{air}$ |
-| $\mathrm{Pr}$ | $c_{p,\mathrm{air}}~ \mu_\mathrm{air} / \lambda_\mathrm{air}$ |
+| $\mathrm{Re}$ | $\rho_\mathrm{air} \cdot u \cdot d_\mathrm{eq} / \mu_\mathrm{air}$ |
+| $\mathrm{Pr}$ | $c_{p,\mathrm{air}} \cdot \mu_\mathrm{air} / \lambda_\mathrm{air}$ |
 | $\mathrm{Sc}$ | $\mu_\mathrm{air} / (\rho_\mathrm{air} D_\mathrm{ac})$ |
 | $\mathrm{Nu}$, $\mathrm{Sh}$ | $\alpha_h d_\mathrm{eq}/\lambda_\mathrm{air}$, $\alpha_m d_\mathrm{eq}/D_\mathrm{ac}$ |
 | $\mathrm{NTU}$ | $\alpha_h A_\mathrm{tot} / (\dot m_\mathrm{air} c_{p,\mathrm{air}})$ |
