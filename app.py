@@ -84,7 +84,7 @@ def make_process_figure(sim, ph_T_C, sp_T_C, dr_T_C):
     t_step = [0, ph_end, ph_end, sp_end, sp_end, t_end]
     T_step = [ph_T_C, ph_T_C, sp_T_C, sp_T_C, dr_T_C, dr_T_C]
 
-    fig, axes = plt.subplots(2, 2, figsize=(12, 5))
+    fig, axes = plt.subplots(2, 2, figsize=(11, 4.25))
     fig.suptitle(
         f"Empirical correlations  |  "
         f"r_spray = {sim.r_spraying*1e6:.1f} ×10⁻⁶ kg/s  |  "
@@ -141,7 +141,7 @@ def make_dissolution_figure(sim, t_proc_min, ssa_cm2g):
     t_diss, F_diss, k = dissolution_curve(wg_at_t / 100.0, ssa_cm2g)
     _, F_noloss, _    = dissolution_curve(wg_nl_at_t / 100.0, ssa_cm2g)
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4))
     fig.suptitle(
         f"Virtual Sample — t = {t_s:.1f} min  [{stage_name}]  "
         f"WG = {wg_at_t:.3f}%  (no-loss: {wg_nl_at_t:.3f}%)   k = {k:.4e} s⁻¹",
@@ -245,6 +245,9 @@ st.caption(
     "**Pre-heating → Spraying → Drying → Dissolution prediction.** "
     "r_spray and r_dry are derived from the AICc-selected empirical correlations "
     "(r_spray R²=0.844, r_dry R²=0.851; Bosch 2018 DoE, 19 runs)."
+)
+st.caption(
+    "**Full model development**: [GitHub repo](https://github.com/SamdGuizani/FB_Coating_Digital_Twin)"
 )
 
 # ── Sidebar sliders ───────────────────────────────────────────────────────────
