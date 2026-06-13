@@ -17,6 +17,7 @@ dependencies:
   - statsmodels>=0.14
   - pytest
   - streamlit>=1.37
+  - plotly>=5.20
   - pip
   - pip:
       - mat73
