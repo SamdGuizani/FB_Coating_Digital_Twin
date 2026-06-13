@@ -6,6 +6,19 @@ loss rates fitted on a 20-run Design of Experiments (2018).
 
 ---
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Repository structure](#repository-structure)
+- [Installation](#installation)
+- [Notebooks](#notebooks)
+- [Streamlit web app](#streamlit-web-app)
+- [Coefficient optimisation pipeline](#coefficient-optimisation-pipeline)
+- [Key modelling assumptions](#key-modelling-assumptions)
+- [Reference](#reference)
+
+---
+
 ## Overview
 
 The model simulates a three-stage pharmaceutical coating process:
@@ -27,7 +40,7 @@ inverse-modelling pipeline and nomenclature — is documented in
 [MODELLING_BACKGROUND_README.md](MODELLING_BACKGROUND_README.md).
 
 The twin can be used interactively either through the Jupyter notebooks
-(see below) or through a **Streamlit web app** (locally: `streamlit run app.py` or cloud deployed: https://huggingface.co/spaces/SamdGuizani/fluid-bed-coating-twin).
+(see below) or through a **Streamlit web app** locally, `streamlit run app.py` (Matplotlib rendering) or `streamlit run app_plotly.py` (Plotly rendering) or  cloud deployed https://huggingface.co/spaces/SamdGuizani/fluid-bed-coating-twin.
 
 <img width="1269" height="614" alt="image" src="https://github.com/user-attachments/assets/0490885e-4f53-4e23-9163-a353ae02547d" />
 
@@ -48,7 +61,8 @@ Both models were selected by two-stage AICc exhaustive subset search.
 
 ```
 .
-├── app.py                           # Streamlit web app (replicates notebook 05b)
+├── app.py                           # Streamlit web app — Matplotlib rendering (replicates notebook 05b)
+├── app_plotly.py                    # Streamlit web app — Plotly rendering
 │
 ├── notebooks/
 │   ├── 01_preheating.ipynb          # Single-stage pre-heating exploration
@@ -147,7 +161,14 @@ A browser-based version of the digital twin (same model as notebook 05b:
 
 ```bash
 conda activate FB_twin
-streamlit run app.py
+streamlit run app.py # Matplotlib rendering
+```
+
+Or
+
+```bash
+conda activate FB_twin
+streamlit run app_plotly.py # Plotly rendering
 ```
 
 The app is also deployed at https://huggingface.co/spaces/SamdGuizani/fluid-bed-coating-twin.
