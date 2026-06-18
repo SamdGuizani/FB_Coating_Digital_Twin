@@ -470,6 +470,21 @@ $\mathrm{DM} = m_\mathrm{solution} \cdot \mathrm{CC}/100 / M_b \times 1000$ [g/k
 inlet humidity influences the twin **only through the $r_\mathrm{drying}$ correlation** — the ODEs
 themselves run with dry inlet air (§7).
 
+**GUI nomenclature bridge.** The correlation predictors above use modelling
+names; the notebooks (05a/05b) and the Streamlit app expose them under different
+slider labels. The mapping is exact and unit-consistent:
+
+| Correlation predictor | GUI slider | Relationship |
+|---|---|---|
+| CC — coating solution concentration [wt %] | **DMC** (1–2 %) | identical; passed straight through |
+| DM — dry-matter ratio [g/kg] | **Coating level** (−1…+1) | DM is the engineering value of the coded coating level via the DoE recipe: $\mathrm{DM} = 1.7 \cdot \text{level} + 6.4$ [g/kg] |
+
+So `DMC → CC` is a direct hand-off, while the coded **coating level** is converted
+to the physical **DM** ratio (g/kg) — using the *same* engineered formula above —
+before entering the correlations. A side effect of the recipe
+($m_\mathrm{solution} \propto 1/\mathrm{CC}$) is that DM depends only on the coating level
+and is independent of DMC, so the two GUI sliders act as decoupled inputs.
+
 ## 7. Key assumptions and known limitations
 
 - **Lumped bed** — one particle temperature and one particle moisture content for the whole bed;

@@ -55,6 +55,14 @@ literature values for the coating attrition rates:
 
 Both models were selected by two-stage AICc exhaustive subset search.
 
+> **Naming note (GUI ↔ correlations).** The two correlation predictors use
+> modelling names that differ from the slider labels in the notebooks and app:
+> **coating conc (CC)** is the **DMC** slider (coating solution concentration,
+> 1–2 %, passed straight through), and **DM ratio** is the **Coating level**
+> slider (coded −1…+1) converted to the engineered dry-matter ratio
+> `DM = 1.7·level + 6.4` g/kg. See MODELLING_BACKGROUND_README.md §6 for the
+> full mapping.
+
 ---
 
 ## Repository structure
