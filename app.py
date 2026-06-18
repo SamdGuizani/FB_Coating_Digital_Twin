@@ -260,8 +260,12 @@ with st.sidebar:
     T0_C          = st.slider("T₀ particle (°C)", 15.0, 30.0, 20.0, 1.0)
     batch_kg      = st.slider("Batch size (kg)",   3.0,  6.0,  4.6,  0.1)
     humidity_g_kg = st.slider("Humidity (g/kg)",   0.0, 25.0, 13.4,  0.5)
-    dmc_pct       = st.slider("DMC (% m/m)",       1.0,  2.0,  1.5,  0.1)
-    coating_level = st.slider("Coating level",    -1.0,  1.0,  0.5,  0.05)
+    dmc_pct       = st.slider("DMC (% m/m)",       1.0,  2.0,  1.5,  0.1,
+        help="Coating solution dry-matter concentration. Feeds the "
+             "correlations as CC (coating concentration).")
+    coating_level = st.slider("Coating level",    -1.0,  1.0,  0.5,  0.05,
+        help="Coded DoE coating level (−1…+1). Converted to the dry-matter "
+             "ratio DM = 1.7·level + 6.4 g/kg, which feeds the correlations.")
 
     st.markdown("**Pre-heating**")
     ph_T_C     = st.slider("[PH] T inlet (°C)",   40.0, 60.0, 50.0, 2.0)
