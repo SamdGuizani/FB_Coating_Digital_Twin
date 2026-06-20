@@ -2,6 +2,7 @@
 *.pptx
 Presentation/scripts/
 Disso_simulator_v01.xlsx
+Fluid Bed Coating Digital Twin_S Guizani_v06_Cue Sheet.docx
 
 # ── Local data ────────────────────────────────────────────────────────────────
 data/
@@ -36,6 +37,8 @@ htmlcov/
 # ── Jupyter ───────────────────────────────────────────────────────────────────
 .ipynb_checkpoints/
 */.ipynb_checkpoints/
+# jupyterlab-lsp virtual-document mirrors (auto-generated code extractions)
+.virtual_documents/
 
 # ── Claude Code ───────────────────────────────────────────────────────────────
 .claude/
